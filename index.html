@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MINI GAME CHO BE IUUUU:3</title>
+
+  <style>
+    :root{
+      --pink:#ff4d6d;
+      --red:#ff2e63;
+      --bg1:#ff5f7a;
+      --bg2:#ff8fb3;
+      --card: rgba(255,255,255,.92);
+      --text:#1f1f1f;
+      --muted:#6b6b6b;
+      --shadow: 0 20px 70px rgba(0,0,0,.22);
+      --radius: 24px;
+    }
+
+    *{ box-sizing:border-box; font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; }
+    body{
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      overflow-x:hidden;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(255,255,255,.20), transparent 60%),
+        radial-gradient(900px 600px at 80% 15%, rgba(255,255,255,.18), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,.35) 0 4px, transparent 5px),
+        radial-gradient(circle at 16% 23%, rgba(255,255,255,.25) 0 3px, transparent 4px),
+        radial-gradient(circle at 82% 20%, rgba(255,255,255,.35) 0 4px, transparent 5px),
+        radial-gradient(circle at 78% 26%, rgba(255,255,255,.22) 0 3px, transparent 4px),
+
+        radial-gradient(circle at 25% 70%, rgba(255,224,231,.55) 0 3px, transparent 4px),
+        radial-gradient(circle at 28% 74%, rgba(255,224,231,.35) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 78%, rgba(255,239,200,.45) 0 3px, transparent 4px),
+        radial-gradient(circle at 73% 82%, rgba(255,239,200,.30) 0 2px, transparent 3px),
+
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:
+        420px 420px, 420px 420px, 420px 420px, 420px 420px,
+        520px 520px, 520px 520px, 560px 560px, 560px 560px,
+        70px 70px, 70px 70px;
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 26px 16px 38px;
+      position:relative;
+      z-index:1;
+    }
+
+    .panel{
+      width:min(1180px, 100%);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.6);
+      overflow:hidden;
+    }
+
+    .header{
+      padding: 24px 26px 18px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      background: linear-gradient(135deg, rgba(255,77,109,.12), rgba(255,126,179,.10));
+      border-bottom: 1px solid rgba(0,0,0,.05);
+    }
+
+    .title h1{
+      margin:0;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    .title .sub{
+      margin-top:6px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 760px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      font-size:12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,77,109,.12);
+      border: 1px solid rgba(255,77,109,.22);
+      color: #b81f3d;
+      font-weight:700;
+      user-select:none;
+    }
+
+    .btn{
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 10px 22px rgba(255,77,109,.26);
+      transition: transform .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover{ filter: brightness(.98); transform: translateY(-1px); }
+    .btn:active{ transform: translateY(0) scale(.98); }
+
+    .btn.secondary{
+      background: #fff;
+      color: var(--pink);
+      border: 1px solid rgba(255,77,109,.28);
+      box-shadow:none;
+    }
+
+    .progress{
+      height: 10px;
+      background: rgba(255,77,109,.10);
+      overflow:hidden;
+    }
+    .progress > div{
+      height:100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--pink), var(--red));
+      transition: width .35s ease;
+    }
+
+    .content{
+      padding: 22px 26px 26px;
+    }
+
+    .question-card{
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(0,0,0,.06);
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .q-title{
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.45;
+    }
+
+    .hint{
+      margin:0 0 16px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+    @media (max-width: 640px){
+      .options{ grid-template-columns: 1fr; }
+    }
+
+    .opt{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,77,109,.22);
+      background: rgba(255,255,255,.94);
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      min-height: 66px;
+    }
+    .opt:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,77,109,.44);
+      background: rgba(255,245,248,.98);
+    }
+    .opt:active{ transform: translateY(0) scale(.99); }
+
+    .badgeABCD{
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 950;
+      color:#fff;
+      background: linear-gradient(135deg, var(--pink), var(--red));
+      box-shadow: 0 10px 18px rgba(255,77,109,.22);
+      flex: 0 0 auto;
+    }
+    .opt span{
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
+    .resultWrap{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .big{
+      font-size: 18px;
+      font-weight: 900;
+      color:#b81f3d;
+    }
+    .muted{
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .rowBtns{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="header">
+        <div class="title">
+          <h1>MINI GAME CHO BE IUUUU:3</h1>
+          <div class="sub">
+            Hânn iuu chọn đáp án theo cảm giác nha. Đây là một trò chơi nho nhỏ cho vui ✨
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="pill" id="stepPill">Câu 1/10</div>
+          <button class="btn secondary" id="musicBtn" type="button">🔊 Nhạc</button>
+        </div>
+      </div>
+
+      <div class="progress"><div id="progressBar"></div></div>
+
+      <div class="content" id="content">
+        <div class="question-card">
+          <h2 class="q-title" id="question">...</h2>
+          <p class="hint" id="hint">Chọn 1 đáp án neee.</p>
+          <div class="options" id="options"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2023/02/28/audio_8c6a5d91ae.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ====== DÁN URL WEB APP CỦA MÀY Ở ĐÂY ======
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyWMCNk3D5krrGHeIeReNi5ljh7OkJfjGdf9DXl-ddanDGZCHLDcDH-WUho7AOdxQM9/exec";
+
+    // ====== QUÀ (ẨN) ======
+    const GIFTS = [
+      { key: "lipstick", label: "Son môi 💄" },
+      { key: "necklace", label: "Dây chuyền ✨" },
+      { key: "shirt", label: "Áo 👕" },
+      { key: "pants", label: "Quần 👖" }
+    ];
+
+    // ====== CÂU HỎI ======
+    const questions = [
+      { type:"predict",
+        q:"🎁 Nếu Tết này có một “bùa may mắn” đi theo iuuu, iuu muốn nó giúp mình kiểu gì nhất?",
+        a:["Trông tươi tắn liền","Tinh tế nhẹ nhàng","Gọn gàng dễ phối","Thoải mái xịn xò"],
+        score:{
+          "Trông tươi tắn liền": {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Tinh tế nhẹ nhàng":   {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Gọn gàng dễ phối":    {lipstick:0, necklace:0, shirt:3, pants:0},
+          "Thoải mái xịn xò":    {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"📸 Chụp ảnh Tết/Valentine, Hânn iuu muốn vibe của mình là…",
+        a:["Cute xinh xắn","Sang nhẹ tinh tế","Chỉnh chu thanh lịch","Cá tính có gu"],
+        score:{
+          "Cute xinh xắn":      {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Sang nhẹ tinh tế":   {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Chỉnh chu thanh lịch":{lipstick:0, necklace:0, shirt:3, pants:0},
+          "Cá tính có gu":      {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"🧧 Nếu có 1 thứ “nhỏ thôi nhưng làm iuuu cảm thấy thicc”, Hânn chọn loại nào neee?",
+        a:["Nhìn phát thấy xinh","Nhìn phát thấy sang","Nhìn phát thấy gọn","Nhìn phát thấy chất"],
+        score:{
+          "Nhìn phát thấy xinh": {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Nhìn phát thấy sang": {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Nhìn phát thấy gọn":  {lipstick:0, necklace:0, shirt:3, pants:0},
+          "Nhìn phát thấy chất": {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"🌙 Đi chơi tối, iuu thích kiểu “điểm nhấn” nào hơn?",
+        a:["Nổi bật vừa đủ","Lấp lánh vừa đủ","Đẹp chuẩn bài","Thoải mái chuẩn gu"],
+        score:{
+          "Nổi bật vừa đủ":     {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Lấp lánh vừa đủ":    {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Đẹp chuẩn bài":      {lipstick:0, necklace:0, shirt:3, pants:0},
+          "Thoải mái chuẩn gu": {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"🪞 Trước khi ra ngoài, iuu thường “chốt” thứ gì để tự tin hơn?",
+        a:["Thần thái mặt mũi","Một điểm nhấn tinh tế","Tổng thể gọn gàng","Cảm giác dễ chịu"],
+        score:{
+          "Thần thái mặt mũi":       {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Một điểm nhấn tinh tế":    {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Tổng thể gọn gàng":        {lipstick:0, necklace:0, shirt:3, pants:0},
+          "Cảm giác dễ chịu":         {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"🎀 Nếu được tàii khen Hânn , Hânn thích nghe lời khen kiểu nào nhất?",
+        a:["“Hôm nay xinh ghê hongg”","“Nhìn tinh tế ghiaaa”","“Hợp outfit ghê”","“Gu ăn mặc xịn thật nhaa”"],
+        score:{
+          "“Hôm nay xinh ghê hongg”": {lipstick:3, necklace:0, shirt:0, pants:0},
+          "“Nhìn tinh tế ghiaaa”": {lipstick:0, necklace:3, shirt:0, pants:0},
+          "“Hợp outfit ghê”":   {lipstick:0, necklace:0, shirt:3, pants:0},
+          "“Gu ăn mặc xịn thật nhaa”": {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"predict",
+        q:"🌸 Chọn 1 “phép màu” cho ngày Tết: Hânn iuu muốn nó giúp mình…",
+        a:["Rạng rỡ ngay lập tức","Dịu dàng nâng cấp","Dễ phối đồ mọi nơi","Dễ đi dễ chạy dễ chơi"],
+        score:{
+          "Rạng rỡ ngay lập tức": {lipstick:3, necklace:0, shirt:0, pants:0},
+          "Dịu dàng nâng cấp":     {lipstick:0, necklace:3, shirt:0, pants:0},
+          "Dễ phối đồ mọi nơi":    {lipstick:0, necklace:0, shirt:3, pants:0},
+          "Dễ đi dễ chạy dễ chơi": {lipstick:0, necklace:0, shirt:0, pants:3}
+        }
+      },
+      { type:"love",
+        q:"💗 Nếu tài có một ngày mệt mỏi, iuu sẽ chọn chiêu nào trước?",
+        a:["Ôm cái đã","Nói chuyện nhẹ nhàng","Dắt đi ăn cho vui","ý kiến khác hihi"],
+        score:{
+          "Ôm cái đã": {lipstick:0, necklace:1, shirt:0, pants:0},
+          "Nói chuyện nhẹ nhàng": {lipstick:1, necklace:0, shirt:0, pants:0},
+          "Dắt đi ăn cho vui": {lipstick:0, necklace:0, shirt:1, pants:0},
+          "ý kiến khác hihi": {lipstick:0, necklace:0, shirt:0, pants:1}
+        }
+      },
+      { type:"love",
+        q:"🥺 Lúc giận tài, Hânn muốn anh làm gì nhất?",
+        a:["Dỗ liền","Xin lỗi rõ ràng","ôm iuu một cáiii","mún cái khác hihi"],
+        score:{
+          "Dỗ liền": {lipstick:1, necklace:0, shirt:0, pants:0},
+          "Xin lỗi rõ ràng": {lipstick:0, necklace:1, shirt:0, pants:0},
+          "ôm iuu một cáiii": {lipstick:0, necklace:0, shirt:1, pants:0},
+          "mún cái khác hihi": {lipstick:0, necklace:0, shirt:0, pants:1}
+        }
+      },
+      { type:"love",
+        q:"❤️ iuu chọn câu này nha: “iuu có mún chờ đợi cùng tài hongg...”",
+        a:["rất mún lunn","mún gặp tài ngay lập tứcc","không, không mún chờ ","chỉ nhắn cho vui"],
+        score:{
+          "rất mún lunn": {lipstick:0, necklace:1, shirt:0, pants:0},
+          "mún gặp tài ngay lập tứcc": {lipstick:1, necklace:0, shirt:0, pants:0},
+          "không, không mún chờ ": {lipstick:0, necklace:0, shirt:1, pants:0},
+          "chỉ nhắn cho vui": {lipstick:0, necklace:0, shirt:0, pants:1}
+        }
+      }
+    ];
+
+    // ====== STATE ======
+    let index = 0;
+    let answers = [];
+    const total = { lipstick:0, necklace:0, shirt:0, pants:0 };
+
+    // ====== DOM ======
+    const questionEl = document.getElementById("question");
+    const hintEl = document.getElementById("hint");
+    const optionsEl = document.getElementById("options");
+    const progressBar = document.getElementById("progressBar");
+    const stepPill = document.getElementById("stepPill");
+    const content = document.getElementById("content");
+
+    // Music
+    const music = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+    let musicOn = false;
+
+    async function toggleMusic(){
+      try{
+        if(!musicOn){
+          await music.play();
+          musicOn = true;
+          musicBtn.textContent = "🔇 Nhạc";
+        }else{
+          music.pause();
+          musicOn = false;
+          musicBtn.textContent = "🔊 Nhạc";
+        }
+      }catch(e){
+        alert("Trình duyệt đang chặn phát nhạc. Bấm lại nút 🔊 nha!");
+      }
+    }
+    musicBtn.addEventListener("click", toggleMusic);
+    document.body.addEventListener("click", () => { if(!musicOn) toggleMusic(); }, { once:true });
+
+    function nowVN(){
+      return new Date().toLocaleString("vi-VN");
+    }
+
+    function addScore(qIndex, choice){
+      const map = questions[qIndex].score?.[choice];
+      if(!map) return;
+      total.lipstick += map.lipstick || 0;
+      total.necklace += map.necklace || 0;
+      total.shirt += map.shirt || 0;
+      total.pants += map.pants || 0;
+    }
+
+    function pickGift(){
+      let max = -Infinity; 
+      for(const g of GIFTS) max = Math.max(max, total[g.key]);
+      const top = GIFTS.filter(g => total[g.key] === max);
+      return top[Math.floor(Math.random() * top.length)];
+    }
+
+    async function sendResult(payload){
+  await fetch(WEB_APP_URL, {
+    method: "POST",
+    body: JSON.stringify(payload) // để mặc định text/plain => không preflight
+  });
+}
+
+
+    function setProgress(){
+      stepPill.textContent = `Câu ${Math.min(index+1, questions.length)}/${questions.length}`;
+      progressBar.style.width = `${(index / questions.length) * 100}%`;
+    }
+
+    function loadQuestion(){
+      const current = questions[index];
+      questionEl.textContent = current.q;
+      hintEl.textContent = "Chọn 1 đáp án neee.";
+
+      optionsEl.innerHTML = "";
+      setProgress();
+
+      const letters = ["A","B","C","D"];
+      current.a.forEach((choice, i) => {
+        const div = document.createElement("div");
+        div.className = "opt";
+        div.innerHTML = `
+          <div class="badgeABCD">${letters[i] || "•"}</div>
+          <span>${choice}</span>
+        `;
+        div.onclick = () => selectAnswer(choice);
+        optionsEl.appendChild(div);
+      });
+    }
+
+    function selectAnswer(choice){
+      answers.push(choice);
+      addScore(index, choice);
+      index++;
+
+      if(index < questions.length) loadQuestion();
+      else showEndScreen();
+    }
+
+    async function showEndScreen(){
+      progressBar.style.width = "100%";
+      stepPill.textContent = "Hoàn thành ✅";
+
+      const chosenGift = pickGift();
+
+      const payload = {
+        time: nowVN(),
+        player: "Hânn iuu",
+        gift: chosenGift.label,
+        score: { ...total },
+        answers: answers
+      };
+
+      let ok = true;
+      try{
+        await sendResult(payload);
+      }catch(e){
+        ok = false;
+      }
+
+      // Người chơi KHÔNG thấy kết quả, chỉ thấy thông báo đã gửi
+      content.innerHTML = `
+        <div class="question-card">
+          <div class="resultWrap">
+            <div class="big">Done rồi bé iuuuu 💖</div>
+            <div class="muted">
+              ${ok ? "Kết quả đã được gửi cho anh rồi đóoo 💌" : "Hic... gửi kết quả bị lỗi 😢 Bé bấm chơi lại giúp anh nha!"}
+            </div>
+            <div class="rowBtns">
+              <button class="btn secondary" onclick="location.reload()">🔁 Chơi lại</button>
+            </div>
+            <div class="muted">Chúc bé Tết vui + Valentine ngọt 🧧💝</div>
+          </div>
+        </div>
+      `;
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
